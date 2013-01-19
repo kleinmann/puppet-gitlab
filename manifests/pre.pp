@@ -80,7 +80,7 @@ class gitlab::debian_packages {
 
   $db_packages = $gitlab_dbtype ? {
     mysql => ['libmysql++-dev','libmysqlclient-dev'],
-    pgsql => ['libpq-dev', 'postgresql-client-9.2'],
+    pgsql => ['libpq-dev', 'postgresql-client'],
   }
   package {
     $db_packages:
