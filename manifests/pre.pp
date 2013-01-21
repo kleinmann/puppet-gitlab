@@ -73,27 +73,11 @@ class gitlab::debian_packages {
   $git_user       = $gitlab::git_user
   $git_admin_pubkey = $gitlab::git_admin_pubkey
 
-  #exec {
-  #  'apt-get update':
-  #    command     => '/usr/bin/apt-get update';
-  #}
-
-  $db_packages = $gitlab_dbtype ? {
-    mysql => ['libmysql++-dev','libmysqlclient-dev'],
-    pgsql => ['libpq-dev', 'postgresql-client'],
-  }
-  package {
-    $db_packages:
-      ensure  => installed,
-      #require => Exec['apt-get update']
-  }
-
   package {
     ['git','git-core','wget','curl','redis-server',
       'openssh-server','python-pip','libicu-dev',
-      'libxml2-dev','libxslt1-dev','python-dev']:
+      'python-dev']:
         ensure  => installed,
-        #require => Exec['apt-get update'],
   }
 
   case $::lsbdistcodename {
@@ -136,11 +120,6 @@ class gitlab::debian_packages {
     } # Squeeze, Precise
     default: {
       # Assuming default ruby 1.9.3 (wheezy,quantal)
-      package {
-        ['ruby','ruby-dev','rubygems','rake']:
-          #require => Exec['apt-get update'],
-          ensure  => installed;
-      }
     } # Default
   } # Case:: $::operatingsystem
 
