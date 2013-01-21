@@ -26,9 +26,6 @@ class gitlab::server {
 
 
   package {
-    'bundler':
-      ensure   => installed,
-      provider => gem;
     'charlock_holmes':
       ensure   => '0.6.9',
       provider => gem;
