@@ -73,10 +73,10 @@ class gitlab::debian_packages {
   $git_user       = $gitlab::git_user
   $git_admin_pubkey = $gitlab::git_admin_pubkey
 
-  exec {
-    'apt-get update':
-      command     => '/usr/bin/apt-get update';
-  }
+  #exec {
+  #  'apt-get update':
+  #    command     => '/usr/bin/apt-get update';
+  #}
 
   $db_packages = $gitlab_dbtype ? {
     mysql => ['libmysql++-dev','libmysqlclient-dev'],
@@ -85,7 +85,7 @@ class gitlab::debian_packages {
   package {
     $db_packages:
       ensure  => installed,
-      require => Exec['apt-get update']
+      #require => Exec['apt-get update']
   }
 
   package {
@@ -93,7 +93,7 @@ class gitlab::debian_packages {
       'openssh-server','python-pip','libicu-dev',
       'libxml2-dev','libxslt1-dev','python-dev']:
         ensure  => installed,
-        require => Exec['apt-get update'],
+        #require => Exec['apt-get update'],
   }
 
   case $::lsbdistcodename {
@@ -102,7 +102,7 @@ class gitlab::debian_packages {
       package {
         ['checkinstall','libcurl4-openssl-dev','libreadline6-dev','libpq-dev',
         'libssl-dev','build-essential','zlib1g-dev','libyaml-dev','libc6-dev']:
-          require => Exec['apt-get update'],
+          #require => Exec['apt-get update'],
           ensure  => installed;
       }
 
@@ -138,7 +138,7 @@ class gitlab::debian_packages {
       # Assuming default ruby 1.9.3 (wheezy,quantal)
       package {
         ['ruby','ruby-dev','rubygems','rake']:
-          require => Exec['apt-get update'],
+          #require => Exec['apt-get update'],
           ensure  => installed;
       }
     } # Default
